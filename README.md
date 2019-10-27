@@ -1,5 +1,4 @@
 # PIC18F252 TIMER0 interrupt
-============================
 
 Initial a PIC18F252 with an external 10MHz crystal for a 40MHz system clock.
 

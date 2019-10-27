@@ -2,8 +2,8 @@
  * Possible solution for homework in post:
  * https://www.microchip.com/forums/FindPost/1116654
  * 
- * See full project in github repository:
- * 
+ * Find full project in repository:
+ * https://github.com/dsoze1138/18F252_Timer0
  * 
  * File     : main.c
  * Author   : dan1138
