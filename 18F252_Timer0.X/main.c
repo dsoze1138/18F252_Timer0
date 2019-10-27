@@ -19,7 +19,7 @@
  *             <>  3 : RA1/AN1           PGM/RB5 : 26 <>      LCD_D5
  *             <>  4 : RA2/AN2               RB4 : 25 <>      LCD_D4
  *             <>  5 : RA3/AN3          CC22/RB3 : 24 <>      LCD_D3
- *             <>  6 : RA4/C1OUT             RB2 : 23 <>      LCD_D2
+ *         LED <>  6 : RA4/C1OUT             RB2 : 23 <>      LCD_D2
  *             <>  7 : RA5/AN4               RB1 : 22 <>      LCD_D1
  *         GND <>  8 : VSS                   RB0 : 21 <>      LCD_D0
  *       10MHz <>  9 : RA7/OSC1              VDD : 20 <- 5v0
@@ -98,12 +98,11 @@ void PIC_Init(void) {
     ADCON1 = 0x0F;      /* configure all ADC inputs for digital I/O */
 
     LATA   = 0x00;
-    TRISA  = 0xC1;      /* RA1 output for LED1, RA2 output for LED2, RA3 output to LCD_RS, RA4 output for LCD_RW, RA5 output to LCD_E */
-    LATB   = 0x30;
-    TRISB  = 0xCF;      /* RB0-3 are keypad row inputs, RB4,RB5 are keypad COL1,COL2 drivers, RB6,RB7 are used for In-Circuit-Debug */
-    INTCON2bits.nRBPU = 0; /* enable PORTB pull-ups for inputs */
+    TRISA  = 0xEF;      /* RA4 output for LED */
+    LATB   = 0x00;
+    TRISB  = 0x00;      /* RB0-7 outputs to HD44780 controller */
     LATC   = 0x00;
-    TRISC  = 0xF3;      /* RC2,RC3 are keypad COL3,COL4 drivers, RC4-RC7 are LCD I/O D4-D7 */
+    TRISC  = 0x1F;      /* RC5,RC6,RC7 outputs to HD44780 controller */
 }
 /*
  * Setup TIMER0 to assert an interrupt every 16384 instruction cycles
@@ -157,7 +156,7 @@ void main(void)
         {
             T0_TickSample = T0_TickSample + T0_TickDelta;
             /* at least 10 TIMER0 (1.6384ms) interrupts occurred */
-            Nop();
+            LATAbits.LATA4 ^= 1; /* Toggle LED on RA4 */
         }
     }
 }
