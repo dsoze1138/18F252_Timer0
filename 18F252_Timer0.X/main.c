@@ -74,15 +74,22 @@
 #pragma config WRT0 = OFF, WRT1 = OFF, WRT2 = OFF, WRT3 = OFF
 #pragma config EBTR0 = OFF, EBTR1 = OFF, EBTR2 = OFF, EBTR3 = OFF
 /*
- *
+ * Target specific definitions for Special Function registers
  */
 #include <xc.h>
+/*
+ * C standard library header files
+ */
 #include <stddef.h>
 #include <stdint.h>
 /*
  * System oscillator frequency
  */
 #define _XTAL_FREQ (40000000ul)
+/*
+ * Global data
+ */
+uint8_t gTIMER0_TickCount;
 /*
  * Initialize this PIC
  */
@@ -107,7 +114,6 @@ void PIC_Init(void) {
 /*
  * Setup TIMER0 to assert an interrupt every 16384 instruction cycles
  */
- uint8_t gTIMER0_TickCount;
 void TIMER0_Init(void)
 {
     INTCONbits.TMR0IE = 0;
